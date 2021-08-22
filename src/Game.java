@@ -68,11 +68,18 @@ public class Game {
     }
 
     public void help(){
-        My.setTextColor(My.ANSI_BLUE);
         helpInputCmd();
         roulette.helpInputSector();
         roulette.helpInputBet();
+        helpGit();
+
         System.out.println();
+    }
+
+    private void helpGit() {
+        My.setTextColor(My.ANSI_BLUE);
+        System.out.println();
+        System.out.println("https://github.com/AlexeyPertsukh/hw08-java-constructors-game-roulette");
         My.resetTextColor();
     }
 
