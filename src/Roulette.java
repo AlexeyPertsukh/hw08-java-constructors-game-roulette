@@ -201,9 +201,9 @@ public class Roulette {
         //чет/нечет
         String strEvOdd = "";
         if (isEven(val)) {
-            strEvOdd = "ЧЕтНОЕ";
+            strEvOdd = "ЧЕтНОЕ";    //специально буквы разной высоты
         } else if (isOdd(val)) {
-            strEvOdd = "НЕЧЕТНОЕ";
+            strEvOdd = "неЧЕТНОЕ"; //специально буквы разной высоты
         }
 
         //цвет
