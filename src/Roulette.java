@@ -121,13 +121,9 @@ public class Roulette {
 
 
     private String sectorWin;
-    private int type;          //тип рулетки
+    private final int type;          //тип рулетки
     private int maxSector;
     private String sectorCheat;
-
-    public Roulette() {
-        this(0);
-    }
 
     public Roulette(int type) {
 
@@ -148,10 +144,6 @@ public class Roulette {
         }
     }
 
-
-    public String getSectorWin() {
-        return sectorWin;
-    }
 
     //анимация
     private void goAnimation() {
@@ -327,10 +319,10 @@ public class Roulette {
 
 
     //проверка ставки на корректность
-    public static boolean isCorrectBet(double bet) {
+    public static boolean isCorrectBet(double checkBet) {
 
-        for (int i = 0; i < BETS_CORRECT.length; i++) {
-            if (bet == BETS_CORRECT[i]) {
+        for (double bet : BETS_CORRECT) {
+            if (checkBet == bet) {
                 return true;
             }
         }
@@ -340,7 +332,6 @@ public class Roulette {
 
     //проверка на коректность сектора
     public boolean isCorrectSector(String sector) {
-        String str;
         sector = sector.toLowerCase();
         sector = sector.replaceAll("\\s", "");
 
@@ -418,8 +409,6 @@ public class Roulette {
 
     //выигрыш/проигрыш $
     public double getWiningMoney(double bet, String sector) {
-        String str;
-
         int valWin = Integer.parseInt(sectorWin);
 
         //угадали номер сектора?
@@ -674,16 +663,6 @@ public class Roulette {
         return (isSector19to36(str) && isSector19to36(num));
     }
 
-    //возвращает int > 0 из строки, где два числа разделены разделителем (напр. "4-6" - вернет 4 или 6 при num = 1 или 2)
-    //если что-то пошло не так, возращает 0
-    private int getIntInStrNearSeparator(String str, int num, char charSeparator ) {
-        str = Util.getStrNearSeparator(str, num, charSeparator);
-        if(! Util.isInteger(str)) {
-            return 0;
-        }
-        return  Integer.parseInt(str);
-    }
-
     private int getFirstIntInStrNearSeparator(String str, char charSeparator) {
         str = Util.getStrNearSeparator(str,1, charSeparator);
         if(! Util.isInteger(str)) {
@@ -741,29 +720,6 @@ public class Roulette {
         return isSector(num, val1, val2);
     }
 
-    public void printVertical(String str) { //распечатка чисел выбранной вертикали
-
-        if(! isVertical(str)) {
-            return;
-        }
-
-        int val1 = getFirstIntInStrNearSeparator(str, SEPARATOR);
-        int val2 = getLastIntInStrNearSeparator(str, SEPARATOR);
-        if ((val1 == 0 ) || (val2 == 0)) {
-            return;
-        }
-
-        Color.printColorBlue("РЯД (вертикаль) с числами: ");
-
-        for (int i = val1; i <= val2; i++) {
-            Color.printColorBlue(Integer.toString(i) );
-            if(i < val2) {
-                Color.printColorBlue(", ");
-            }
-        }
-        System.out.println();
-    }
-
     //колонна (горизонтальная линия 12 чисел)
     public boolean isColumn(String str) {
         String str1 = String.format("1%c34", SEPARATOR_COLUMN);
@@ -814,7 +770,6 @@ public class Roulette {
 
     //сплит (2 соседних числа)
     public boolean isSplit(String str) {
-        String split = "";
         int val1 = getFirstIntInStrNearSeparator(str, SEPARATOR_SPLIT);
         int val2 = getLastIntInStrNearSeparator(str, SEPARATOR_SPLIT);
 
@@ -845,23 +800,6 @@ public class Roulette {
         }
 
         return ((val1 == num) || (val2 == num));
-    }
-
-    //распечатывает спислк сплитов
-    public static void printSplit() {
-        String split = "";
-        int val1;
-        int val2;
-
-        for (int i = 1; i < 4; i++) {
-            for (int j = 0; j < 11; j++) {
-                val1 = (j * 3) + i;
-                val2 = val1 + 3;
-                split = String.format("%d%c%d", val1, SEPARATOR_SPLIT, val2);
-                System.out.print(split + "  ");
-            }
-            System.out.println();
-        }
     }
 
     // угол (квадрат 4 числа)
@@ -958,7 +896,7 @@ public class Roulette {
             return false;
         }
 
-        return ((val1 > 0) && (val2 <37) && (val1 %3 == 1) && (val2 %3 == 0) && (val2 - val1 == 5)) ;
+        return ((val2 < 37) && (val1 % 3 == 1) && (val2 % 3 == 0) && (val2 - val1 == 5)) ;
     }
 
     public boolean isLine(String str, int num) {
@@ -973,28 +911,7 @@ public class Roulette {
             return false;
         }
 
-        return ((val1 > 0) && (val1 %3 == 1) && (val2 %3 == 0) && (val2 - val1 == 5) && isSector(num, val1, val2)) ;
-    }
-
-    public void printLine(String str){
-        if(! isLine(str)) {
-            return;
-        }
-
-        int val = getFirstIntInStrNearSeparator(str, SEPARATOR);
-        if (val == 0 ) {
-            return;
-        }
-
-        Color.printColorBlue("ЛИНИЯ (2 столбца, шесть чисел): ");
-
-        for (int i = val; i < val + 6; i++) {
-            Color.printColorBlue(Integer.toString(i));
-            if(i < val + 5) {
-                Color.printColorBlue(", ");
-            }
-        }
-        System.out.println();
+        return ((val1 % 3 == 1) && (val2 % 3 == 0) && (val2 - val1 == 5) && isSector(num, val1, val2)) ;
     }
 
     //распечатывает подсказку- маленькое игровое поле
