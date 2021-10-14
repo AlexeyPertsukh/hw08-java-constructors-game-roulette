@@ -102,15 +102,15 @@ public class Player {
             System.out.printf("%s. Ставка  %.1f$    Сектор %s    Выигрыш  %+.1f$    Баланс  %.1f$  \n", name, bet, sector.toUpperCase(), lastAddMoney, money);
         }
         else{
-            My.printlnColor(name +" не имеет денег и пропустил раунд \uD83D\uDC80\uD83D\uDC80\uD83D\uDC80\uD83D\uDC80\uD83D\uDC80\uD83D\uDC80 ", "yellow");
+            Color.printlnColor(name +" не имеет денег и пропустил раунд \uD83D\uDC80\uD83D\uDC80\uD83D\uDC80\uD83D\uDC80\uD83D\uDC80\uD83D\uDC80 ", "yellow");
         }
     }
 
     //распечатывает количество денег
     public void printMoney(){
-        My.setTextColor(My.ANSI_BLUE);
+        Color.setTextColor(Color.ANSI_BLUE);
         System.out.printf("У вас %.1f $  \n", money);
-        My.resetTextColor();
+        Color.resetTextColor();
     }
 
     public String nextBet(Scanner sc) {

@@ -137,8 +137,6 @@ public class Roulette {
 
         this.type = type;
 
-        //sectors = SECTORS[type];
-
         maxSector = Integer.MIN_VALUE;
         int val;
 
@@ -166,7 +164,7 @@ public class Roulette {
 //        System.out.println("Шарик катится по секторам: ");
         for (int i = 0; i < numRepeat; i++) {
 
-            My.sleep(50);
+            Util.sleep(50);
 
             sectorWin = SECTORS[type][numSect];
 
@@ -178,10 +176,10 @@ public class Roulette {
 
             str = String.format("[ %2s ]", sectorWin);
             if (isRed(Integer.parseInt(sectorWin))) {
-                My.printColor(str, My.ANSI_BLACK, My.ANSI_RED_BACKGROUND);
+                Color.printColor(str, Color.ANSI_BLACK, Color.ANSI_RED_BACKGROUND);
             }
             else if(Integer.parseInt(sectorWin) == 0) {
-                My.printColor(str, My.ANSI_BLACK, My.ANSI_BLUE_BACKGROUND);
+                Color.printColor(str, Color.ANSI_BLACK, Color.ANSI_BLUE_BACKGROUND);
             }
             else
             {
@@ -202,9 +200,9 @@ public class Roulette {
     }
 
     public void go() {
-        My.sleep(1000);
+        Util.sleep(1000);
         goAnimation();
-        My.sleep(1000);
+        Util.sleep(1000);
 
         int val = (Integer.parseInt(sectorWin));
 
@@ -241,7 +239,7 @@ public class Roulette {
         if (resBlack) {
             System.out.printf("%s", strColor);
         } else if (resRed) {
-            My.printColor(String.format("%s", strColor), My.ANSI_BLACK, My.ANSI_RED_BACKGROUND);
+            Color.printColor(String.format("%s", strColor), Color.ANSI_BLACK, Color.ANSI_RED_BACKGROUND);
         }
 
         System.out.println();
@@ -276,37 +274,37 @@ public class Roulette {
 
     //справка по вводу сектора
     public void helpInputSector() {
-        My.setTextColor(My.ANSI_BLUE);
+        Color.setTextColor(Color.ANSI_BLUE);
         System.out.println("+++++");
         System.out.println("Команды для ввода сектора:");
         System.out.printf("• Ставки на ЧИСЛО (%d:1): введите число от 0 (0, 00 или 000 в американской рулетке) до %d \n", COEF_NUM, maxSector);
 
         System.out.printf("• Ставки на ЧЕТНОЕ (%d:1), введите одну из команд: ", COEF_EVEN_ODD);
-        My.printlnArr(EVEN_STR);
+        Util.printlnArr(EVEN_STR);
 
         System.out.printf("  Ставки на НЕЧЕТНОЕ (%d:1), введите одну из команд: ", COEF_EVEN_ODD);
-        My.printlnArr(ODD_STR);
+        Util.printlnArr(ODD_STR);
 
         System.out.printf("• Ставки на ЧЕРНОЕ (%d:1), введите одну из команд: ", COEF_RED_BLACK);
-        My.printlnArr(BLACK_STR);
+        Util.printlnArr(BLACK_STR);
 
         System.out.printf("  Ставки на КРАСНОЕ (%d:1), введите одну из команд: ", COEF_RED_BLACK);
-        My.printlnArr(RED_STR);
+        Util.printlnArr(RED_STR);
 
         System.out.printf("• Ставки на СЕКТОР  1-18 (%d:1), введите одну из команд: ", COEF_LOW_HEIGH);
-        My.printlnArr(SECT_1_18);
+        Util.printlnArr(SECT_1_18);
 
         System.out.printf("  Ставки на СЕКТОР 19-36 (%d:1), введите одну из команд: ", COEF_LOW_HEIGH);
-        My.printlnArr(SECT_19_36);
+        Util.printlnArr(SECT_19_36);
 
         System.out.printf("• Ставки на РЯД (столбец) (%d:1), введите одну из команд: ", COEF_VERTICAL);
-        My.printlnArr(VERTICAL_STR);
+        Util.printlnArr(VERTICAL_STR);
 
         System.out.printf("• Ставки на КОЛОНУ (горизонтальная линия 12 чисел) (%d:1), введите одну из команд: ", COEF_COLUMN);
         System.out.printf("1%c34, 2%c35, 3%c36  \n", SEPARATOR_COLUMN, SEPARATOR_COLUMN, SEPARATOR_COLUMN);
 
         System.out.printf("• Ставки на ДЮЖИНУ (квадрат 12 чисел) (%d:1), введите одну из команд: ", COEF_DOZEN);
-        My.printlnArr(DOZEN_STR);
+        Util.printlnArr(DOZEN_STR);
 
         System.out.printf("• Ставки на СПЛИТ (2 соседних числа по горизонтали) (%d:1), ввеедите номера соседних секторов, напр.: 8%c11 или 24%c27 \n", COEF_SPLIT, SEPARATOR_SPLIT, SEPARATOR_SPLIT);
 
@@ -315,16 +313,16 @@ public class Roulette {
         System.out.printf("• Ставки на ЛИНИЮ (2 соседних столбца, 6 чисел подряд) (%d:1), введите первое и последнее число линии,\n", COEF_LINE);
         System.out.println("  то есть начало первого столбца и конец второго. напр.: 7-12 или 22-27");
 
-        My.resetTextColor();
+        Color.resetTextColor();
     }
 
     //справка по вводу ставки
     public void helpInputBet() {
-        My.setTextColor(My.ANSI_BLUE);
+        Color.setTextColor(Color.ANSI_BLUE);
         System.out.println("+++++");
         System.out.println("Допустимые ставки:");
         printCorrectBets();
-        My.resetTextColor();
+        Color.resetTextColor();
     }
 
 
@@ -347,7 +345,7 @@ public class Roulette {
         sector = sector.replaceAll("\\s", "");
 
         //числа
-        if (My.isStrInArr(SECTORS[type], sector)) {
+        if (Util.isStrInArr(SECTORS[type], sector)) {
             return true;
         }
 
@@ -368,7 +366,7 @@ public class Roulette {
 
         //ряд (столбец)
         if (isVertical(sector)) {
-            My.printlnColorBlue("РЯД (вертикаль)");
+            Color.printlnColorBlue("РЯД (вертикаль)");
 //            printVertical(sector);
             return true;
         }
@@ -381,13 +379,13 @@ public class Roulette {
 
         //дюжина (квадрат 12 чисел)
         if (isDozen(sector)) {
-            My.printlnColorBlue("ДЮЖИНА");
+            Color.printlnColorBlue("ДЮЖИНА");
             return true;
         }
 
         //сплит (2 соседних по горизонтали)
         if(isSplit(sector)) {
-            My.printlnColorBlue("СПЛИТ");
+            Color.printlnColorBlue("СПЛИТ");
             return true;
         }
 
@@ -400,7 +398,7 @@ public class Roulette {
         //линия (2 столбца)
         if(isLine(sector)) {
 //            printLine(sector);
-            My.printlnColorBlue("ЛИНИЯ (2 столбца)");
+            Color.printlnColorBlue("ЛИНИЯ (2 столбца)");
             return true;
         }
 
@@ -411,11 +409,11 @@ public class Roulette {
 
     //распечатка корректных ставок
     public static void printCorrectBets() {
-        My.setTextColor(My.ANSI_BLUE);
-        My.printArr(BETS_CORRECT);
+        Color.setTextColor(Color.ANSI_BLUE);
+        Util.printArr(BETS_CORRECT);
         System.out.println(" $");
 
-        My.resetTextColor();
+        Color.resetTextColor();
     }
 
     //выигрыш/проигрыш $
@@ -508,10 +506,9 @@ public class Roulette {
                     int val = (3 - (i / 2)) + (3 * j);
                     System.out.print("|");
                     if (isRed(val)) {
-                        My.printColor(String.format(" %2d  ", val), My.ANSI_BLACK, My.ANSI_RED_BACKGROUND);
+                        Color.printColor(String.format(" %2d  ", val), Color.ANSI_BLACK, Color.ANSI_RED_BACKGROUND);
                     } else {
                         System.out.printf(" %2d  ", val);
-//                        My.printColor(String.format(" %2d  ", val), My.ANSI_WHITE, My.ANSI_BLACK_BACKGROUND);
                     }
                 } else if (i == 2 || i == 4) {
                     System.out.print("|-----");
@@ -537,7 +534,7 @@ public class Roulette {
             if (ch == '|' || ch == '-') {
                 System.out.print(ch);
             } else {
-                My.printColor(String.format("%c", ch), My.ANSI_BLACK, My.ANSI_BLUE_BACKGROUND);
+                Color.printColor(String.format("%c", ch), Color.ANSI_BLACK, Color.ANSI_BLUE_BACKGROUND);
             }
 
         }
@@ -546,9 +543,9 @@ public class Roulette {
     //установить чит - выигрышный сектор
     public boolean setSectorCheat(String sector) {
 
-        if (My.isStrInArr(SECTORS[type], sector)) {
+        if (Util.isStrInArr(SECTORS[type], sector)) {
             sectorCheat = sector;
-            My.printlnColorBlue(";)");
+            Color.printlnColorBlue(";)");
             return true;
         }
 
@@ -586,7 +583,7 @@ public class Roulette {
     }
 
     public boolean isRed(String str) {
-        return My.isStrInArr(RED_STR, str);
+        return Util.isStrInArr(RED_STR, str);
     }
 
     public boolean isRed(String str, int num)
@@ -605,7 +602,7 @@ public class Roulette {
     }
 
     public static boolean isBlack(String str) {
-        return My.isStrInArr(BLACK_STR, str);
+        return Util.isStrInArr(BLACK_STR, str);
     }
 
     public boolean isBlack(String str, int num)
@@ -622,7 +619,7 @@ public class Roulette {
     }
 
     public boolean isEven(String str) {
-        return My.isStrInArr(EVEN_STR, str);
+        return Util.isStrInArr(EVEN_STR, str);
     }
 
     public boolean isEven(String str, int num) {
@@ -638,7 +635,7 @@ public class Roulette {
     }
 
     public boolean isOdd(String str) {
-        return My.isStrInArr(ODD_STR, str);
+        return Util.isStrInArr(ODD_STR, str);
     }
 
     public boolean isOdd(String str, int num) {
@@ -657,7 +654,7 @@ public class Roulette {
     }
 
     public boolean isSector1to18(String str) {
-        return My.isStrInArr(SECT_1_18, str);
+        return Util.isStrInArr(SECT_1_18, str);
     }
 
     public boolean isSector1to18(String str, int num) {
@@ -670,7 +667,7 @@ public class Roulette {
     }
 
     public boolean isSector19to36(String str) {
-        return My.isStrInArr(SECT_19_36, str);
+        return Util.isStrInArr(SECT_19_36, str);
     }
 
     public boolean isSector19to36(String str, int num) {
@@ -680,24 +677,24 @@ public class Roulette {
     //возвращает int > 0 из строки, где два числа разделены разделителем (напр. "4-6" - вернет 4 или 6 при num = 1 или 2)
     //если что-то пошло не так, возращает 0
     private int getIntInStrNearSeparator(String str, int num, char charSeparator ) {
-        str = My.getStrNearSeparator(str, num, charSeparator);
-        if(! My.isInteger(str)) {
+        str = Util.getStrNearSeparator(str, num, charSeparator);
+        if(! Util.isInteger(str)) {
             return 0;
         }
         return  Integer.parseInt(str);
     }
 
     private int getFirstIntInStrNearSeparator(String str, char charSeparator) {
-        str = My.getStrNearSeparator(str,1, charSeparator);
-        if(! My.isInteger(str)) {
+        str = Util.getStrNearSeparator(str,1, charSeparator);
+        if(! Util.isInteger(str)) {
             return 0;
         }
         return  Integer.parseInt(str);
     }
 
     private int getLastIntInStrNearSeparator(String str, char charSeparator) {
-        str = My.getStrNearSeparator(str,2, charSeparator);
-        if(! My.isInteger(str)) {
+        str = Util.getStrNearSeparator(str,2, charSeparator);
+        if(! Util.isInteger(str)) {
             return 0;
         }
         return  Integer.parseInt(str);
@@ -706,7 +703,7 @@ public class Roulette {
 
     //дюжина (квадрат 12 чисел)
     public boolean isDozen(String str) {
-        return My.isStrInArr(DOZEN_STR, str);
+        return Util.isStrInArr(DOZEN_STR, str);
     }
 
     public boolean isDozen(String str, int num) {
@@ -726,7 +723,7 @@ public class Roulette {
 
     //ряд (вертикальный столбец)
     public boolean isVertical(String str) {
-        return My.isStrInArr(VERTICAL_STR, str);
+        return Util.isStrInArr(VERTICAL_STR, str);
     }
 
     public boolean isVertical(String str, int num) {
@@ -756,12 +753,12 @@ public class Roulette {
             return;
         }
 
-        My.printColorBlue("РЯД (вертикаль) с числами: ");
+        Color.printColorBlue("РЯД (вертикаль) с числами: ");
 
         for (int i = val1; i <= val2; i++) {
-            My.printColorBlue(Integer.toString(i) );
+            Color.printColorBlue(Integer.toString(i) );
             if(i < val2) {
-                My.printColorBlue(", ");
+                Color.printColorBlue(", ");
             }
         }
         System.out.println();
@@ -805,11 +802,11 @@ public class Roulette {
             return;
         }
 
-        My.printColorBlue("КОЛОННА (горизонталь) с числами: ");
+        Color.printColorBlue("КОЛОННА (горизонталь) с числами: ");
         for (int i = val1; i < 37; i+= 3) {
-            My.printColorBlue(Integer.toString(i));
+            Color.printColorBlue(Integer.toString(i));
             if(i + 3 < 37) {
-                My.printColorBlue(", ");
+                Color.printColorBlue(", ");
             }
         }
         System.out.println();
@@ -943,7 +940,7 @@ public class Roulette {
         }
 
         String angle = String.format("УГОЛ (квадрат 4 числа): %d, %d, %d, %d",  val1, val1 + 1, val2, val2 - 1);
-        My.printlnColorBlue(angle);
+        Color.printlnColorBlue(angle);
     }
 
     // линия (6 чисел, 2 соседних столбца)
@@ -989,12 +986,12 @@ public class Roulette {
             return;
         }
 
-        My.printColorBlue("ЛИНИЯ (2 столбца, шесть чисел): ");
+        Color.printColorBlue("ЛИНИЯ (2 столбца, шесть чисел): ");
 
         for (int i = val; i < val + 6; i++) {
-            My.printColorBlue(Integer.toString(i));
+            Color.printColorBlue(Integer.toString(i));
             if(i < val + 5) {
-                My.printColorBlue(", ");
+                Color.printColorBlue(", ");
             }
         }
         System.out.println();
@@ -1004,7 +1001,7 @@ public class Roulette {
     public static void printSmallTab(int type) {
         int val;
 
-        My.setTextColor(My.ANSI_BLUE);
+        Color.setTextColor(Color.ANSI_BLUE);
 
         for (int i = 3; i > 0; i--) {
             String str = "|      ";
@@ -1045,7 +1042,7 @@ public class Roulette {
             System.out.println();
         }
 
-        My.resetTextColor();
+        Color.resetTextColor();
     }
 
     public void printSmallTab() {
